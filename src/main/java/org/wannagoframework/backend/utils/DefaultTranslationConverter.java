@@ -38,6 +38,9 @@ private final String prefix;
       String[] vals = key.split("\\.");
       if ( vals.length == 3 ) {
         String iso3Language = vals[1];
+        String k = vals[0];
+        if ( ! k.equals(prefix))
+          return;
         EntityTranslation translation;
         if (result.containsKey(iso3Language)) {
           translation = result.get(iso3Language);
