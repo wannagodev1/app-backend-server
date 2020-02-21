@@ -84,9 +84,10 @@ public class UtilsConverter {
     orikaBeanMapper
         .getClassMapBuilder(BaseEntity.class, org.wannagoframework.backend.domain.nosqldb.BaseEntity.class)
         .byDefault().customize(
-        new CustomMapper<BaseEntity, org.wannagoframework.backend.domain.graphdb.BaseEntity>() {
+        new CustomMapper<BaseEntity, org.wannagoframework.backend.domain.nosqldb.BaseEntity>() {
           @Override
-          public void mapAtoB(BaseEntity a, org.wannagoframework.backend.domain.graphdb.BaseEntity b,
+          public void mapAtoB(BaseEntity a,
+              org.wannagoframework.backend.domain.nosqldb.BaseEntity b,
               MappingContext context) {
             if (a.getIsNew()) {
               b.setId(null);
@@ -98,9 +99,10 @@ public class UtilsConverter {
         .getClassMapBuilder(BaseEntity.class,
             org.wannagoframework.backend.domain.relationaldb.BaseEntity.class)
         .byDefault().customize(
-        new CustomMapper<BaseEntity, org.wannagoframework.backend.domain.graphdb.BaseEntity>() {
+        new CustomMapper<BaseEntity, org.wannagoframework.backend.domain.relationaldb.BaseEntity>() {
           @Override
-          public void mapAtoB(BaseEntity a, org.wannagoframework.backend.domain.graphdb.BaseEntity b,
+          public void mapAtoB(BaseEntity a,
+              org.wannagoframework.backend.domain.relationaldb.BaseEntity b,
               MappingContext context) {
             if (a.getIsNew()) {
               b.setId(null);

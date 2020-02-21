@@ -43,17 +43,17 @@ public interface CountryRepository extends Neo4jRepository<Country, Long> {
   long countByNameLike(String name);
 
   @Query(value =
-      "CALL db.INDEX.fulltext.queryNodes('Country-Trl', {name}) YIELD node "
+      "CALL db.index.fulltext.queryNodes('Country-Trl', {name}) YIELD node "
           + " MATCH (m:Country)"
-          + " WHERE m.iso2  =~ {iso2} OR m.iso3  =~ {iso3} or id(node) = id(m) RETURN DISTINCT(n1)",
-  countQuery = "CALL db.INDEX.fulltext.queryNodes('Country-Trl', {name}) YIELD node "
-      + " MATCH (m:Country)"
-      + " WHERE m.iso2  =~ {iso2} OR m.iso3  =~ {iso3} or id(node) = id(m) RETURN COUNT(DISTINCT(n1))")
+          + " WHERE m.iso2  =~ {iso2} OR m.iso3  =~ {iso3} OR id(node) = id(m) RETURN DISTINCT(m)",
+      countQuery = "CALL db.index.fulltext.queryNodes('Country-Trl', {name}) YIELD node "
+          + " MATCH (m:Country)"
+          + " WHERE m.iso2  =~ {iso2} OR m.iso3  =~ {iso3} OR id(node) = id(m) RETURN count(DISTINCT(m))")
   Page<Country> findByNameLikeOrIso2LikeOrIso3Like(String name, String iso2, String iso3, Pageable pageable);
 
-  @Query("CALL db.INDEX.fulltext.queryNodes('Country-Trl', {name}) YIELD node "
+  @Query("CALL db.index.fulltext.queryNodes('Country-Trl', {name}) YIELD node "
       + " MATCH (m:Country)"
-      + " WHERE m.iso2  =~ {iso2} OR m.iso3  =~ {iso3} or id(node) = id(m) RETURN COUNT(DISTINCT(n1))")
+      + " WHERE m.iso2  =~ {iso2} OR m.iso3  =~ {iso3} OR id(node) = id(m) RETURN count(DISTINCT(m))")
   long countByNameLikeOrIso2LikeOrIso3Like(String name, String iso2, String iso3);
 
   @Query(value = "MATCH (m:Country) "
@@ -77,5 +77,7 @@ public interface CountryRepository extends Neo4jRepository<Country, Long> {
 
   List<Country> findByIntermediateRegion(IntermediateRegion intermediateRegion);
 
+  @Query("MATCH (m:Country) WHERE id(m) = {id} RETURN m")
+  Country getById(Long id);
 
 }

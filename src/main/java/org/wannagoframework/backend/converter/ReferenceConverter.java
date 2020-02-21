@@ -54,46 +54,41 @@ public class ReferenceConverter {
               MappingContext context) {
             String iso3Language = (String) context.getProperty("iso3Language");
             if (StringUtils.isNotBlank(iso3Language)) {
-              dto.setName( domain.getNames().getTranslation( iso3Language ) );
+              dto.setName(domain.getNames().getTranslation(iso3Language));
             }
           }
-        }).register();
-    orikaBeanMapper
-        .getClassMapBuilder(org.wannagoframework.dto.domain.reference.Country.class, Country.class)
-        .byDefault().exclude("names").customize(
-        new CustomMapper<org.wannagoframework.dto.domain.reference.Country, Country>() {
+
           @Override
-          public void mapAtoB( org.wannagoframework.dto.domain.reference.Country dto,Country domain,
+          public void mapBtoA(org.wannagoframework.dto.domain.reference.Country dto, Country domain,
               MappingContext context) {
             String iso3Language = (String) context.getProperty("iso3Language");
             if (StringUtils.isNotBlank(iso3Language)) {
-              domain.getNames().setTranslation( iso3Language, dto.getName());
+              domain.getNames().setTranslation(iso3Language, dto.getName());
             }
           }
         }).register();
 
     orikaBeanMapper.getClassMapBuilder(IntermediateRegion.class,
-        org.wannagoframework.dto.domain.reference.IntermediateRegion.class).byDefault().customize(
+        org.wannagoframework.dto.domain.reference.IntermediateRegion.class).byDefault()
+        .exclude("translations").customize(
         new CustomMapper<IntermediateRegion, org.wannagoframework.dto.domain.reference.IntermediateRegion>() {
           @Override
           public void mapAtoB(IntermediateRegion domain,
-              org.wannagoframework.dto.domain.reference.IntermediateRegion dto, MappingContext context) {
-            String iso3Language = (String) context.getProperty("iso3Language");
-            if (StringUtils.isNotBlank(iso3Language)) {
-              dto.setName( domain.getNames().getTranslation( iso3Language ) );
-            }
-          }
-        }).register();
-    orikaBeanMapper
-        .getClassMapBuilder(org.wannagoframework.dto.domain.reference.IntermediateRegion.class, IntermediateRegion.class)
-        .byDefault().exclude("names").customize(
-        new CustomMapper<org.wannagoframework.dto.domain.reference.IntermediateRegion, IntermediateRegion>() {
-          @Override
-          public void mapAtoB( org.wannagoframework.dto.domain.reference.IntermediateRegion dto,IntermediateRegion domain,
+              org.wannagoframework.dto.domain.reference.IntermediateRegion dto,
               MappingContext context) {
             String iso3Language = (String) context.getProperty("iso3Language");
             if (StringUtils.isNotBlank(iso3Language)) {
-              domain.getNames().setTranslation( iso3Language, dto.getName());
+              dto.setName(domain.getNames().getTranslation(iso3Language));
+            }
+          }
+
+          @Override
+          public void mapBtoA(org.wannagoframework.dto.domain.reference.IntermediateRegion dto,
+              IntermediateRegion domain,
+              MappingContext context) {
+            String iso3Language = (String) context.getProperty("iso3Language");
+            if (StringUtils.isNotBlank(iso3Language)) {
+              domain.getNames().setTranslation(iso3Language, dto.getName());
             }
           }
         }).register();
@@ -107,20 +102,16 @@ public class ReferenceConverter {
               MappingContext context) {
             String iso3Language = (String) context.getProperty("iso3Language");
             if (StringUtils.isNotBlank(iso3Language)) {
-              dto.setName( domain.getNames().getTranslation( iso3Language ) );
+              dto.setName(domain.getNames().getTranslation(iso3Language));
             }
           }
-        }).register();
-    orikaBeanMapper
-        .getClassMapBuilder(org.wannagoframework.dto.domain.reference.Region.class, Region.class)
-        .byDefault().exclude("names").customize(
-        new CustomMapper<org.wannagoframework.dto.domain.reference.Region, Region>() {
+
           @Override
-          public void mapAtoB( org.wannagoframework.dto.domain.reference.Region dto,Region domain,
+          public void mapBtoA(org.wannagoframework.dto.domain.reference.Region dto, Region domain,
               MappingContext context) {
             String iso3Language = (String) context.getProperty("iso3Language");
             if (StringUtils.isNotBlank(iso3Language)) {
-              domain.getNames().setTranslation( iso3Language, dto.getName());
+              domain.getNames().setTranslation(iso3Language, dto.getName());
             }
           }
         }).register();
@@ -130,24 +121,22 @@ public class ReferenceConverter {
         .byDefault().customize(
         new CustomMapper<SubRegion, org.wannagoframework.dto.domain.reference.SubRegion>() {
           @Override
-          public void mapAtoB(SubRegion domain, org.wannagoframework.dto.domain.reference.SubRegion dto,
+          public void mapAtoB(SubRegion domain,
+              org.wannagoframework.dto.domain.reference.SubRegion dto,
               MappingContext context) {
             String iso3Language = (String) context.getProperty("iso3Language");
             if (StringUtils.isNotBlank(iso3Language)) {
-              dto.setName( domain.getNames().getTranslation( iso3Language ) );
+              dto.setName(domain.getNames().getTranslation(iso3Language));
             }
           }
-        }).register();
-    orikaBeanMapper
-        .getClassMapBuilder(org.wannagoframework.dto.domain.reference.SubRegion.class, SubRegion.class)
-        .byDefault().exclude("names").customize(
-        new CustomMapper<org.wannagoframework.dto.domain.reference.SubRegion, SubRegion>() {
+
           @Override
-          public void mapAtoB( org.wannagoframework.dto.domain.reference.SubRegion dto,SubRegion domain,
+          public void mapBtoA(org.wannagoframework.dto.domain.reference.SubRegion dto,
+              SubRegion domain,
               MappingContext context) {
             String iso3Language = (String) context.getProperty("iso3Language");
             if (StringUtils.isNotBlank(iso3Language)) {
-              domain.getNames().setTranslation( iso3Language, dto.getName());
+              domain.getNames().setTranslation(iso3Language, dto.getName());
             }
           }
         }).register();

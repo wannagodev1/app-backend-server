@@ -46,6 +46,7 @@ private final String prefix;
           translation = result.get(iso3Language);
         } else {
           translation = new EntityTranslation();
+          translation.setIso3Language(iso3Language);
           result.put(iso3Language, translation);
         }
         if (vals[2].equals("value")) {

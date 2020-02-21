@@ -90,7 +90,9 @@ public class CountryServiceImpl implements CountryService, HasLogger {
   @Override
   public Page<Country> findAnyMatching(String filter, Pageable pageable) {
     if (StringUtils.isNotBlank(filter)) {
-      return countryRepository.findByNameLikeOrIso2LikeOrIso3Like(filter, filter, filter, pageable );
+      String filterExpr = filter + "*";
+      return countryRepository
+          .findByNameLikeOrIso2LikeOrIso3Like(filterExpr, filterExpr, filterExpr, pageable);
     } else {
       return countryRepository.findAll(pageable);
     }
@@ -102,7 +104,9 @@ public class CountryServiceImpl implements CountryService, HasLogger {
       bootstrapCountries();
     }
     if (StringUtils.isNotBlank(filter)) {
-      return countryRepository.countByNameLikeOrIso2LikeOrIso3Like( filter, filter, filter );
+      String filterExpr = filter + "*";
+      return countryRepository
+          .countByNameLikeOrIso2LikeOrIso3Like(filterExpr, filterExpr, filterExpr);
     } else {
       return countryRepository.count();
     }
@@ -171,8 +175,9 @@ public class CountryServiceImpl implements CountryService, HasLogger {
         if (StringUtils.isNotBlank(iso3CellCellValue)) {
           Country country = null;
 
-          Iterable<Country> c = session.query(Country.class, "MATCH (m:Country {name."+language+".value: {value}} RETURN m", Collections
-              .singletonMap( "value", iso3CellCellValue));
+          Iterable<Country> c = session.query(Country.class,
+              "MATCH (m:Country {`name." + language + ".value`: {value}}) RETURN m", Collections
+                  .singletonMap("value", iso3CellCellValue));
           if ( c.iterator().hasNext() )
             country = c.iterator().next();
 
@@ -180,7 +185,8 @@ public class CountryServiceImpl implements CountryService, HasLogger {
             country = new Country();
             country.setIso2(iso2Cell.getStringCellValue());
             country.setIso3(iso3Cell.getStringCellValue());
-            country.getNames().setTranslation(language, iso3CellCellValue);
+            country.getNames().setTranslation(language, nameCell.getStringCellValue()
+            );
             country = countryRepository.save(country);
           }
 
@@ -189,8 +195,9 @@ public class CountryServiceImpl implements CountryService, HasLogger {
             if (StringUtils.isNotBlank(regionCellValue)) {
               Region region = null;
 
-              Iterable<Region> r = session.query(Region.class, "MATCH (m:Region {name."+language+".value: {value}} RETURN m", Collections
-                  .singletonMap( "value", iso3CellCellValue));
+              Iterable<Region> r = session.query(Region.class,
+                  "MATCH (m:Region {`name." + language + ".value`: {value}}) RETURN m", Collections
+                      .singletonMap("value", iso3CellCellValue));
               if ( r.iterator().hasNext() )
                 region = r.iterator().next();
 
@@ -211,8 +218,10 @@ public class CountryServiceImpl implements CountryService, HasLogger {
                 if (StringUtils.isNotBlank(subRegionCellValue)) {
                   SubRegion subRegion = null;
 
-                  Iterable<SubRegion> sr = session.query(SubRegion.class, "MATCH (m:SubRegion {name."+language+".value: {value}} RETURN m", Collections
-                      .singletonMap( "value", iso3CellCellValue));
+                  Iterable<SubRegion> sr = session.query(SubRegion.class,
+                      "MATCH (m:SubRegion {`name." + language + ".value`: {value}}) RETURN m",
+                      Collections
+                          .singletonMap("value", iso3CellCellValue));
                   if ( sr.iterator().hasNext() )
                     subRegion = sr.iterator().next();
 
@@ -234,8 +243,10 @@ public class CountryServiceImpl implements CountryService, HasLogger {
                     if (StringUtils.isNotBlank(intermediateRegionCellValue)) {
                       IntermediateRegion intermediateRegion = null;
 
-                      Iterable<IntermediateRegion> ir = session.query(IntermediateRegion.class, "MATCH (m:IntermediateRegion {name."+language+".value: {value}} RETURN m", Collections
-                          .singletonMap( "value", intermediateRegionCellValue));
+                      Iterable<IntermediateRegion> ir = session.query(IntermediateRegion.class,
+                          "MATCH (m:IntermediateRegion {`name." + language
+                              + ".value`: {value}}) RETURN m", Collections
+                              .singletonMap("value", intermediateRegionCellValue));
                       if ( ir.iterator().hasNext() )
                         intermediateRegion = ir.iterator().next();
 
