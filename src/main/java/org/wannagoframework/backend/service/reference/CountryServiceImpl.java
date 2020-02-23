@@ -34,7 +34,9 @@ import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,10 +93,24 @@ public class CountryServiceImpl implements CountryService, HasLogger {
   public Page<Country> findAnyMatching(String filter, Pageable pageable) {
     if (StringUtils.isNotBlank(filter)) {
       String filterExpr = filter + "*";
+      Sort sort = pageable.getSort();
+      Sort.Order dataSort = sort.iterator().next();
+      Sort newSort = Sort.by(dataSort.getDirection(), "node.`" + dataSort.getProperty() + "`");
+      PageRequest newPageRequest = PageRequest
+          .of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
       return countryRepository
-          .findByNameLikeOrIso2LikeOrIso3Like(filterExpr, filterExpr, filterExpr, pageable);
+          .findByNameLikeOrIso2LikeOrIso3Like(filterExpr, filterExpr, filterExpr, newPageRequest);
     } else {
-      return countryRepository.findAll(pageable);
+      if (pageable.getSort().iterator().next().getProperty().startsWith("name")) {
+        Sort sort = pageable.getSort();
+        Sort.Order dataSort = sort.iterator().next();
+        Sort newSort = Sort.by(dataSort.getDirection(), "m.`" + dataSort.getProperty() + "`");
+        PageRequest newPageRequest = PageRequest
+            .of(pageable.getPageNumber(), pageable.getPageSize(), newSort);
+        return countryRepository.findAll(newPageRequest);
+      } else {
+        return countryRepository.findAll(pageable);
+      }
     }
   }
 
@@ -139,7 +155,7 @@ public class CountryServiceImpl implements CountryService, HasLogger {
     }
     String loggerPrefix = getLoggerPrefix("bootstrapCountries");
 
-    String language = "eng";
+    String language = "en";
     try (Workbook workbook = WorkbookFactory
         .create(new File(appProperties.getBootstrap().getIso3166().getFile()))) {
 
