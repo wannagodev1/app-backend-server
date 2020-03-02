@@ -83,7 +83,7 @@ public class BaseUserServiceImpl<T extends BaseUser> implements BaseUserService<
   public Page<T> findAnyMatching(String filter, Boolean showInactive, Pageable pageable) {
     if (StringUtils.isNotBlank(filter)) {
       return userRepository
-          .findByEmailRegexOrFirstNameRegexOrLastNameRegex(filter, filter, filter, pageable);
+          .findAnyMatching(filter, pageable);
     } else {
       return userRepository.findAll(pageable);
     }
@@ -93,7 +93,7 @@ public class BaseUserServiceImpl<T extends BaseUser> implements BaseUserService<
   public long countAnyMatching(String filter, Boolean showInactive) {
     if (StringUtils.isNotBlank(filter)) {
       return userRepository
-          .countByEmailRegexOrFirstNameRegexOrLastNameRegex(filter, filter, filter);
+          .countAnyMatching(filter);
     } else {
       return userRepository.count();
     }

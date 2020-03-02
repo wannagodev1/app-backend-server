@@ -19,6 +19,7 @@ package org.wannagoframework.backend.repository.graphdb.user;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Depth;
+import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.wannagoframework.backend.domain.graphdb.user.BaseUser;
 
@@ -34,9 +35,10 @@ public interface BaseUserRepository<T extends BaseUser> extends Neo4jRepository<
   @Depth(0)
   T getBySecurityUserId(String securityUserId);
 
-  Page<T> findByEmailRegexOrFirstNameRegexOrLastNameRegex(String emailRegexp,
-      String firstNameRegexp, String lastNameRegexp, Pageable pageable);
+  @Query(value = "MATCH (u:BaseUser) WHERE u.email =~ {filter} OR u.firstName =~ {filter} OR u.lastName =~ {filter} RETURN u, c",
+      countQuery = "MATCH (u:BaseUser) WHERE u.email =~ {filter} OR u.firstName =~ {filter} OR u.lastName =~ {filter} RETURN count(u)")
+  Page<T> findAnyMatching(String filter, Pageable pageable);
 
-  long countByEmailRegexOrFirstNameRegexOrLastNameRegex(String emailRegexp, String firstNameRegexp,
-      String lastNameRegexp);
+  @Query(value = "MATCH (u:BaseUser) WHERE u.email =~ {filter} OR u.firstName =~ {filter} OR u.lastName =~ {filter} RETURN count(u)")
+  long countAnyMatching(String filter);
 }
