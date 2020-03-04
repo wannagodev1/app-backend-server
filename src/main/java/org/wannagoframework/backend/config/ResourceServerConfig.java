@@ -122,7 +122,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     Resource resource = new ClassPathResource("public.txt");
     String publicKey = null;
     try {
-      publicKey = IOUtils.toString(resource.getInputStream(), Charset.defaultCharset());
+      publicKey = IOUtils.toString(resource.getInputStream(), Charset.defaultCharset().name());
     } catch (final IOException e) {
       throw new RuntimeException(e);
     }
