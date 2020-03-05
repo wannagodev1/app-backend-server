@@ -43,6 +43,8 @@ public class BaseUser extends BaseEntity {
 
   private String lastName;
 
+  private String fullName;
+
   private String nickName;
 
   @org.springframework.data.annotation.Transient

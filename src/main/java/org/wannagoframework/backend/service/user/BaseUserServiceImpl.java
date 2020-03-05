@@ -160,6 +160,15 @@ public class BaseUserServiceImpl<T extends BaseUser> implements BaseUserService<
         securityUserService.save(new SaveQuery<>(securityUser));
       }
     }
+
+    String fullName = "";
+    if ( StringUtils.isNotBlank( entity.getFirstName() ))
+      fullName += entity.getFirstName();
+    fullName+=" ";
+    if ( StringUtils.isNotBlank( entity.getLastName() ))
+      fullName += entity.getLastName();
+    entity.setFullName( fullName.trim() );
+
     return userRepository.save(entity); // , 0);
   }
 
