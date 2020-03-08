@@ -22,11 +22,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.wannagoframework.backend.client.ResourceService;
-import org.wannagoframework.backend.client.SecurityUserService;
 import org.wannagoframework.backend.domain.graphdb.user.BaseUser;
-import org.wannagoframework.backend.exception.UserFriendlyDataException;
 import org.wannagoframework.backend.repository.graphdb.user.BaseUserRepository;
+import org.wannagoframework.baseserver.client.ResourceService;
+import org.wannagoframework.baseserver.client.SecurityUserService;
+import org.wannagoframework.dto.domain.exception.UserFriendlyDataException;
 import org.wannagoframework.dto.domain.security.SecurityUser;
 import org.wannagoframework.dto.serviceQuery.ServiceResult;
 import org.wannagoframework.dto.serviceQuery.generic.DeleteByStrIdQuery;
@@ -162,12 +162,14 @@ public class BaseUserServiceImpl<T extends BaseUser> implements BaseUserService<
     }
 
     String fullName = "";
-    if ( StringUtils.isNotBlank( entity.getFirstName() ))
+    if (StringUtils.isNotBlank(entity.getFirstName())) {
       fullName += entity.getFirstName();
-    fullName+=" ";
-    if ( StringUtils.isNotBlank( entity.getLastName() ))
+    }
+    fullName += " ";
+    if (StringUtils.isNotBlank(entity.getLastName())) {
       fullName += entity.getLastName();
-    entity.setFullName( fullName.trim() );
+    }
+    entity.setFullName(fullName.trim());
 
     return userRepository.save(entity); // , 0);
   }

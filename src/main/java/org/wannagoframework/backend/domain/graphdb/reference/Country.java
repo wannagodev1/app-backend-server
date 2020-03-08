@@ -24,9 +24,9 @@ import lombok.ToString;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.Convert;
-import org.wannagoframework.backend.domain.graphdb.BaseEntity;
-import org.wannagoframework.backend.domain.graphdb.EntityTranslations;
-import org.wannagoframework.backend.utils.NameTranslationConverter;
+import org.wannagoframework.baseserver.domain.graphdb.BaseEntity;
+import org.wannagoframework.baseserver.domain.graphdb.EntityTranslations;
+import org.wannagoframework.baseserver.utils.NameTranslationConverter;
 
 /**
  * Referential for countries, based on the ISO 3166 list

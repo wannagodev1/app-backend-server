@@ -19,7 +19,7 @@ package org.wannagoframework.backend.service.user;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.wannagoframework.backend.domain.graphdb.user.BaseUser;
-import org.wannagoframework.backend.service.CrudGraphdbService;
+import org.wannagoframework.baseserver.service.CrudGraphdbService;
 
 /**
  * @author WannaGo Dev1.

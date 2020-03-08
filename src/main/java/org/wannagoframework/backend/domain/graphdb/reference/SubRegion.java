@@ -26,9 +26,9 @@ import lombok.ToString;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.Convert;
-import org.wannagoframework.backend.domain.graphdb.BaseEntity;
-import org.wannagoframework.backend.domain.graphdb.EntityTranslations;
-import org.wannagoframework.backend.utils.NameTranslationConverter;
+import org.wannagoframework.baseserver.domain.graphdb.BaseEntity;
+import org.wannagoframework.baseserver.domain.graphdb.EntityTranslations;
+import org.wannagoframework.baseserver.utils.NameTranslationConverter;
 
 /**
  * @author WannaGo Dev1.
@@ -40,6 +40,7 @@ import org.wannagoframework.backend.utils.NameTranslationConverter;
 @ToString(callSuper = true)
 @NodeEntity
 public class SubRegion extends BaseEntity {
+
   @Convert(NameTranslationConverter.class)
   private EntityTranslations names = new EntityTranslations();
 

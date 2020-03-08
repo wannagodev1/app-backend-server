@@ -18,7 +18,7 @@ package org.wannagoframework.backend.domain.graphdb.user;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.wannagoframework.backend.domain.graphdb.BaseEntity;
+import org.wannagoframework.baseserver.domain.graphdb.BaseEntity;
 import org.wannagoframework.dto.utils.StoredFile;
 
 /**

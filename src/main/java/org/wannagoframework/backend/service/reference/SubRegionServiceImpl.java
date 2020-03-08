@@ -55,7 +55,7 @@ public class SubRegionServiceImpl implements SubRegionService, HasLogger {
   @Override
   public Page<SubRegion> findAnyMatching(String filter, String iso3Language, Pageable pageable) {
     if (StringUtils.isNotBlank(filter)) {
-      return subRegionRepository.findByName( filter, pageable );
+      return subRegionRepository.findByName(filter, pageable);
     } else {
       return subRegionRepository.findAll(pageable);
     }

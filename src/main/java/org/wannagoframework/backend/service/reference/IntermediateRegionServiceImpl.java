@@ -56,7 +56,7 @@ public class IntermediateRegionServiceImpl implements IntermediateRegionService,
   public Page<IntermediateRegion> findAnyMatching(String filter, String iso3Language,
       Pageable pageable) {
     if (StringUtils.isNotBlank(filter)) {
-      return intermediateRegionRepository.findByName( filter, pageable );
+      return intermediateRegionRepository.findByName(filter, pageable);
     } else {
       return intermediateRegionRepository.findAll(pageable);
     }

@@ -20,15 +20,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Depth;
 import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.wannagoframework.backend.domain.graphdb.user.BaseUser;
+import org.wannagoframework.baseserver.repository.graphdb.BaseRepository;
 
 /**
  * @author WannaGo Dev1.
  * @version 1.0
  * @since 2019-03-06
  */
-public interface BaseUserRepository<T extends BaseUser> extends Neo4jRepository<T, Long> {
+public interface BaseUserRepository<T extends BaseUser> extends BaseRepository<T> {
 
   T findByEmailIgnoreCase(String email);
 

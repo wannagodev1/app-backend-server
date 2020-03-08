@@ -93,7 +93,7 @@ public class ReferenceConverter {
           }
         }).register();
 
-     orikaBeanMapper
+    orikaBeanMapper
         .getClassMapBuilder(Region.class, org.wannagoframework.dto.domain.reference.Region.class)
         .byDefault().customize(
         new CustomMapper<Region, org.wannagoframework.dto.domain.reference.Region>() {
@@ -117,7 +117,8 @@ public class ReferenceConverter {
         }).register();
 
     orikaBeanMapper
-        .getClassMapBuilder(SubRegion.class, org.wannagoframework.dto.domain.reference.SubRegion.class)
+        .getClassMapBuilder(SubRegion.class,
+            org.wannagoframework.dto.domain.reference.SubRegion.class)
         .byDefault().customize(
         new CustomMapper<SubRegion, org.wannagoframework.dto.domain.reference.SubRegion>() {
           @Override

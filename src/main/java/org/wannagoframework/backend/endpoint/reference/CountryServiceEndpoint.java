@@ -63,7 +63,8 @@ public class CountryServiceEndpoint extends BaseEndpoint {
               mapperFacade.map(query.getPageable(),
                   Pageable.class, getOrikaContext(query)));
       return handleResult(loggerPrefix,
-          mapperFacade.map(result, org.wannagoframework.dto.utils.Page.class, getOrikaContext(query)));
+          mapperFacade
+              .map(result, org.wannagoframework.dto.utils.Page.class, getOrikaContext(query)));
     } catch (Throwable t) {
       return handleResult(loggerPrefix, t);
     }
@@ -84,7 +85,8 @@ public class CountryServiceEndpoint extends BaseEndpoint {
     String loggerPrefix = getLoggerPrefix("getById");
     try {
       return handleResult(loggerPrefix, mapperFacade
-          .map(countryService.load(query.getId()), org.wannagoframework.dto.domain.reference.Country.class,
+          .map(countryService.load(query.getId()),
+              org.wannagoframework.dto.domain.reference.Country.class,
               getOrikaContext(query)));
     } catch (Throwable t) {
       return handleResult(loggerPrefix, t);

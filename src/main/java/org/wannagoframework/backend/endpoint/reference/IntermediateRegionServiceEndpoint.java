@@ -80,7 +80,8 @@ public class IntermediateRegionServiceEndpoint extends BaseEndpoint {
               mapperFacade.map(query.getPageable(),
                   Pageable.class, getOrikaContext(query)));
       return handleResult(loggerPrefix,
-          mapperFacade.map(result, org.wannagoframework.dto.utils.Page.class, getOrikaContext(query)));
+          mapperFacade
+              .map(result, org.wannagoframework.dto.utils.Page.class, getOrikaContext(query)));
     } catch (Throwable t) {
       return handleResult(loggerPrefix, t);
     }
@@ -123,7 +124,8 @@ public class IntermediateRegionServiceEndpoint extends BaseEndpoint {
       return handleResult(loggerPrefix, mapperFacade.map(intermediateRegionService
               .save(mapperFacade
                   .map(query.getEntity(), IntermediateRegion.class, getOrikaContext(query))),
-          org.wannagoframework.dto.domain.reference.IntermediateRegion.class, getOrikaContext(query)));
+          org.wannagoframework.dto.domain.reference.IntermediateRegion.class,
+          getOrikaContext(query)));
     } catch (Throwable t) {
       return handleResult(loggerPrefix, t);
     }

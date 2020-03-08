@@ -23,18 +23,19 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.wannagoframework.backend.domain.graphdb.reference.Country;
 import org.wannagoframework.backend.domain.graphdb.reference.IntermediateRegion;
 import org.wannagoframework.backend.domain.graphdb.reference.Region;
 import org.wannagoframework.backend.domain.graphdb.reference.SubRegion;
+import org.wannagoframework.baseserver.repository.graphdb.BaseRepository;
 
 /**
  * @author WannaGo Dev1.
  * @version 1.0
  * @since 2019-03-16
  */
-public interface CountryRepository extends Neo4jRepository<Country, Long> {
+public interface CountryRepository extends BaseRepository<Country> {
+
   @Query(value = "CALL db.index.fulltext.queryNodes('Country-Trl', {name}) YIELD node RETURN node",
       countQuery = "CALL db.index.fulltext.queryNodes('Country-Trl', {name}) YIELD node RETURN count(node)")
   Page<Country> findByNameLike(String name, Pageable pageable);
@@ -52,7 +53,8 @@ public interface CountryRepository extends Neo4jRepository<Country, Long> {
       countQuery = "CALL db.index.fulltext.queryNodes('Country-Trl', {name}) YIELD node "
           + " MATCH (m:Country)"
           + " WHERE m.iso2  =~ {iso2} OR m.iso3  =~ {iso3} OR id(node) = id(m) RETURN count(m)")
-  Page<Country> findByNameLikeOrIso2LikeOrIso3Like(String name, String iso2, String iso3, Pageable pageable);
+  Page<Country> findByNameLikeOrIso2LikeOrIso3Like(String name, String iso2, String iso3,
+      Pageable pageable);
 
   @Query("CALL db.index.fulltext.queryNodes('Country-Trl', {name}) YIELD node "
       + " MATCH (m:Country)"

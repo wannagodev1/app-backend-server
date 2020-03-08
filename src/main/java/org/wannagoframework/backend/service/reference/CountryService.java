@@ -21,7 +21,7 @@ package org.wannagoframework.backend.service.reference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.wannagoframework.backend.domain.graphdb.reference.Country;
-import org.wannagoframework.backend.service.CrudGraphdbService;
+import org.wannagoframework.baseserver.service.CrudGraphdbService;
 
 /**
  * @author WannaGo Dev1.

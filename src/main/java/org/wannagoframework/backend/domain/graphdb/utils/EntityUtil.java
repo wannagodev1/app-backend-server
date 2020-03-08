@@ -18,7 +18,7 @@
 
 package org.wannagoframework.backend.domain.graphdb.utils;
 
-import org.wannagoframework.backend.domain.graphdb.BaseEntity;
+import org.wannagoframework.baseserver.domain.graphdb.BaseEntity;
 
 /**
  * @author WannaGo Dev1.

@@ -55,7 +55,7 @@ public class RegionServiceImpl implements RegionService, HasLogger {
   @Override
   public Page<Region> findAnyMatching(String filter, String iso3Language, Pageable pageable) {
     if (StringUtils.isNotBlank(filter)) {
-      return regionRepository.findByName( filter, pageable );
+      return regionRepository.findByName(filter, pageable);
     } else {
       return regionRepository.findAll(pageable);
     }
@@ -64,7 +64,7 @@ public class RegionServiceImpl implements RegionService, HasLogger {
   @Override
   public long countAnyMatching(String filter, String iso3Language) {
     if (StringUtils.isNotBlank(filter)) {
-      return regionRepository.countByName( filter );
+      return regionRepository.countByName(filter);
     } else {
       return regionRepository.count();
     }

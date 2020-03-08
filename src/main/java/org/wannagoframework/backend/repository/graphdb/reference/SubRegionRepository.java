@@ -21,15 +21,16 @@ package org.wannagoframework.backend.repository.graphdb.reference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.wannagoframework.backend.domain.graphdb.reference.SubRegion;
+import org.wannagoframework.baseserver.repository.graphdb.BaseRepository;
 
 /**
  * @author WannaGo Dev1.
  * @version 1.0
  * @since 2019-03-16
  */
-public interface SubRegionRepository extends Neo4jRepository<SubRegion, Long> {
+public interface SubRegionRepository extends BaseRepository<SubRegion> {
+
   @Query(value =
       "CALL db.INDEX.fulltext.queryNodes('SubRegion-Trl', {name}) YIELD node RETURN node",
       countQuery = "CALL db.INDEX.fulltext.queryNodes('SubRegion-Trl', {name}) YIELD node RETURN count(node)")
@@ -40,5 +41,5 @@ public interface SubRegionRepository extends Neo4jRepository<SubRegion, Long> {
 
   @Query("MATCH (m:SubRegion),(c:Country) WHERE id(m) = {subRegionId} AND id(c) = {countryId}"
       + " CREATE (m)-[r:HAS_COUNTRIES]->(c) RETURN m")
-  SubRegion addCountryToSubRegion( Long subRegionId, Long countryId );
+  SubRegion addCountryToSubRegion(Long subRegionId, Long countryId);
 }

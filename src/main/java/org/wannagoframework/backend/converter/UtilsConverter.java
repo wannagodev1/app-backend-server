@@ -19,15 +19,10 @@
 package org.wannagoframework.backend.converter;
 
 import com.google.maps.model.LatLng;
-import ma.glasnost.orika.CustomMapper;
-import ma.glasnost.orika.MappingContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.wannagoframework.backend.domain.graphdb.BaseEntityWithComments;
 import org.wannagoframework.backend.domain.graphdb.utils.MapBounds;
 import org.wannagoframework.commons.utils.OrikaBeanMapper;
-import org.wannagoframework.dto.domain.BaseEntity;
-import org.wannagoframework.dto.domain.EntityTranslation;
 
 /**
  * @author WannaGo Dev1.
@@ -50,64 +45,5 @@ public class UtilsConverter {
 
     orikaBeanMapper.addMapper(MapBounds.class, org.wannagoframework.dto.utils.MapBounds.class);
     orikaBeanMapper.addMapper(org.wannagoframework.dto.utils.MapBounds.class, MapBounds.class);
-
-    orikaBeanMapper.addMapper(BaseEntityWithComments.class,
-        org.wannagoframework.dto.domain.BaseEntityWithComments.class);
-    orikaBeanMapper.addMapper(org.wannagoframework.dto.domain.BaseEntityWithComments.class,
-        BaseEntityWithComments.class);
-
-    orikaBeanMapper
-        .addMapper(EntityTranslation.class, EntityTranslation.class);
-    orikaBeanMapper
-        .addMapper(EntityTranslation.class, EntityTranslation.class);
-
-    orikaBeanMapper
-        .addMapper(org.wannagoframework.backend.domain.graphdb.BaseEntity.class, BaseEntity.class);
-    orikaBeanMapper
-        .addMapper(org.wannagoframework.backend.domain.nosqldb.BaseEntity.class, BaseEntity.class);
-    orikaBeanMapper
-        .addMapper(org.wannagoframework.backend.domain.relationaldb.BaseEntity.class, BaseEntity.class);
-
-    orikaBeanMapper
-        .getClassMapBuilder(BaseEntity.class, org.wannagoframework.backend.domain.graphdb.BaseEntity.class)
-        .byDefault().customize(
-        new CustomMapper<BaseEntity, org.wannagoframework.backend.domain.graphdb.BaseEntity>() {
-          @Override
-          public void mapAtoB(BaseEntity a, org.wannagoframework.backend.domain.graphdb.BaseEntity b,
-              MappingContext context) {
-            if (a.getIsNew()) {
-              b.setId(null);
-            }
-          }
-        }).register();
-
-    orikaBeanMapper
-        .getClassMapBuilder(BaseEntity.class, org.wannagoframework.backend.domain.nosqldb.BaseEntity.class)
-        .byDefault().customize(
-        new CustomMapper<BaseEntity, org.wannagoframework.backend.domain.nosqldb.BaseEntity>() {
-          @Override
-          public void mapAtoB(BaseEntity a,
-              org.wannagoframework.backend.domain.nosqldb.BaseEntity b,
-              MappingContext context) {
-            if (a.getIsNew()) {
-              b.setId(null);
-            }
-          }
-        }).register();
-
-    orikaBeanMapper
-        .getClassMapBuilder(BaseEntity.class,
-            org.wannagoframework.backend.domain.relationaldb.BaseEntity.class)
-        .byDefault().customize(
-        new CustomMapper<BaseEntity, org.wannagoframework.backend.domain.relationaldb.BaseEntity>() {
-          @Override
-          public void mapAtoB(BaseEntity a,
-              org.wannagoframework.backend.domain.relationaldb.BaseEntity b,
-              MappingContext context) {
-            if (a.getIsNew()) {
-              b.setId(null);
-            }
-          }
-        }).register();
   }
 }

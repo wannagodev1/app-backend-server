@@ -40,7 +40,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.wannagoframework.backend.config.AppProperties;
 import org.wannagoframework.backend.domain.graphdb.reference.Country;
 import org.wannagoframework.backend.domain.graphdb.reference.IntermediateRegion;
 import org.wannagoframework.backend.domain.graphdb.reference.Region;
@@ -49,6 +48,7 @@ import org.wannagoframework.backend.repository.graphdb.reference.CountryReposito
 import org.wannagoframework.backend.repository.graphdb.reference.IntermediateRegionRepository;
 import org.wannagoframework.backend.repository.graphdb.reference.RegionRepository;
 import org.wannagoframework.backend.repository.graphdb.reference.SubRegionRepository;
+import org.wannagoframework.baseserver.config.AppProperties;
 import org.wannagoframework.commons.utils.HasLogger;
 
 /**
@@ -131,7 +131,7 @@ public class CountryServiceImpl implements CountryService, HasLogger {
   @Override
   public Country getByIso2OrIso3(String iso2OrIso3Name) {
     Optional<Country> _country = countryRepository.getByIso3(iso2OrIso3Name);
-    if (! _country.isPresent()) {
+    if (!_country.isPresent()) {
       _country = countryRepository.getByIso2(iso2OrIso3Name);
       if (!_country.isPresent()) {
         return null;
@@ -194,8 +194,9 @@ public class CountryServiceImpl implements CountryService, HasLogger {
           Iterable<Country> c = session.query(Country.class,
               "MATCH (m:Country {`name." + language + ".value`: {value}}) RETURN m", Collections
                   .singletonMap("value", iso3CellCellValue));
-          if ( c.iterator().hasNext() )
+          if (c.iterator().hasNext()) {
             country = c.iterator().next();
+          }
 
           if (country == null) {
             country = new Country();
@@ -214,8 +215,9 @@ public class CountryServiceImpl implements CountryService, HasLogger {
               Iterable<Region> r = session.query(Region.class,
                   "MATCH (m:Region {`name." + language + ".value`: {value}}) RETURN m", Collections
                       .singletonMap("value", iso3CellCellValue));
-              if ( r.iterator().hasNext() )
+              if (r.iterator().hasNext()) {
                 region = r.iterator().next();
+              }
 
               if (region == null) {
                 region = new Region();
@@ -224,7 +226,7 @@ public class CountryServiceImpl implements CountryService, HasLogger {
               }
 
               if (!region.getCountries().contains(country)) {
-                region = regionRepository.addCountryToRegion( region.getId(), country.getId());
+                region = regionRepository.addCountryToRegion(region.getId(), country.getId());
               }
               country.setRegion(region);
               countryRepository.save(country);
@@ -238,8 +240,9 @@ public class CountryServiceImpl implements CountryService, HasLogger {
                       "MATCH (m:SubRegion {`name." + language + ".value`: {value}}) RETURN m",
                       Collections
                           .singletonMap("value", iso3CellCellValue));
-                  if ( sr.iterator().hasNext() )
+                  if (sr.iterator().hasNext()) {
                     subRegion = sr.iterator().next();
+                  }
 
                   if (subRegion == null) {
                     subRegion = new SubRegion();
@@ -248,7 +251,8 @@ public class CountryServiceImpl implements CountryService, HasLogger {
                   }
 
                   if (!subRegion.getCountries().contains(country)) {
-                    subRegion = subRegionRepository.addCountryToSubRegion( subRegion.getId(), country.getId() );
+                    subRegion = subRegionRepository
+                        .addCountryToSubRegion(subRegion.getId(), country.getId());
                   }
                   country.setSubRegion(subRegion);
                   countryRepository.save(country);
@@ -263,8 +267,9 @@ public class CountryServiceImpl implements CountryService, HasLogger {
                           "MATCH (m:IntermediateRegion {`name." + language
                               + ".value`: {value}}) RETURN m", Collections
                               .singletonMap("value", intermediateRegionCellValue));
-                      if ( ir.iterator().hasNext() )
+                      if (ir.iterator().hasNext()) {
                         intermediateRegion = ir.iterator().next();
+                      }
 
                       if (intermediateRegion == null) {
                         intermediateRegion = new IntermediateRegion();
@@ -273,10 +278,14 @@ public class CountryServiceImpl implements CountryService, HasLogger {
                       }
 
                       if (!intermediateRegion.getCountries().contains(country)) {
-                        intermediateRegion =  intermediateRegionRepository.addCountryToIntermediateRegion( intermediateRegion.getId(), country.getId());
+                        intermediateRegion = intermediateRegionRepository
+                            .addCountryToIntermediateRegion(intermediateRegion.getId(),
+                                country.getId());
                       }
                       if (!intermediateRegion.getRegions().contains(region)) {
-                        intermediateRegion  = intermediateRegionRepository.addRegionToIntermediateRegion( intermediateRegion.getId(), region.getId());
+                        intermediateRegion = intermediateRegionRepository
+                            .addRegionToIntermediateRegion(intermediateRegion.getId(),
+                                region.getId());
                       }
                       country.setIntermediateRegion(intermediateRegion);
                       countryRepository.save(country);
