@@ -28,7 +28,7 @@ import org.wannagoframework.baseserver.domain.graphdb.BaseEntity;
 public final class EntityUtil {
 
   public static String getName(Class<? extends BaseEntity> type) {
-    // All main entities have simple one word names, so this is sufficient. Metadata
+    // All main domain have simple one word names, so this is sufficient. Metadata
     // could be added to the class if necessary.
     return type.getSimpleName();
   }
